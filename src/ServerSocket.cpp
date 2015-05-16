@@ -22,16 +22,16 @@ void ServerSocket::startListening() {
 	int socketListeningResult = listen(serverSocket, SOMAXCONN);
 
 	if (socketListeningResult < 0) {
-		throw SocketException(
-				"Listening failed, error: " + socketListeningResult);
+		throw SocketException("Listening failed, error: " + socketListeningResult);
 	}
 }
 
 void ServerSocket::stopListening() {
-	close(serverSocket);
-#ifdef _WIN32
-	WSACleanup();
-#endif
+	SocketHelper::closeSocket(serverSocket);
+
+	#ifdef _WIN32
+		WSACleanup();
+	#endif
 }
 
 #ifdef _WIN32
@@ -55,9 +55,9 @@ bool ServerSocket::wsaInitialization() {
 #endif
 
 void ServerSocket::initServerSocket() {
-#ifdef _WIN32
-	wsaInitialization();
-#endif
+	#ifdef _WIN32
+		wsaInitialization();
+	#endif
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 
 	if (serverSocket < 0) {
