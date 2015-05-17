@@ -2,7 +2,7 @@
 #define SOCKET_HELPER_H
 
 	#include "SocketException.h"
-        #include <string.h>
+    #include <string.h>
 	
 	#ifdef _WIN32
 		#pragma comment(lib, "Ws2_32.lib")

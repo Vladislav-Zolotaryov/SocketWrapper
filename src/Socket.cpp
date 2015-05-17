@@ -1,6 +1,14 @@
 #include "Socket.h"
 
 Socket::Socket(const char* hostname, int port) {
+	#ifdef _WIN32
+		WSADATA wsaData;
+		int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+		if (iResult != 0) {
+			throw SocketException("WSA Startup Failed");
+		}
+	#endif
+
 	socketHandle = Socket::createSocketHandle();
 	remoteSocketInfo = SocketHelper::createSocketInfo(hostname, port);
 }
@@ -11,6 +19,9 @@ Socket::Socket(SOCKET socketHandle) {
 
 Socket::~Socket() {
 	disconnect();
+	#ifdef _WIN32
+		WSACleanup();
+	#endif
 }
 
 int Socket::createSocketHandle() {

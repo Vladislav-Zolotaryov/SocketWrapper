@@ -12,7 +12,6 @@ sockaddr_in SocketHelper::createSocketInfo(const char* hostname, int port) {
 	#ifdef _WIN32
 		struct sockaddr_in remoteSocketInfo;
 		struct addrinfo *result = NULL;
-		struct addrinfo *ptr = NULL;
 		struct addrinfo hints;	
 
 		ZeroMemory(&hints, sizeof(hints));
@@ -20,13 +19,14 @@ sockaddr_in SocketHelper::createSocketInfo(const char* hostname, int port) {
 		hints.ai_socktype = SOCK_STREAM;
 		hints.ai_protocol = IPPROTO_TCP;
 
-		DWORD dwRetval = getaddrinfo(hostname, NULL, &hints, &result);
+		const char* portStr = std::to_string(port).c_str();
+
+		DWORD dwRetval = getaddrinfo(hostname, portStr, &hints, &result);
 		if (dwRetval != 0) {
 			throw SocketException("System DNS name resolution not configured properly");
 		}
 
-		ptr = result->ai_next;
-		remoteSocketInfo = *(struct sockaddr_in *) ptr->ai_addr;
+		remoteSocketInfo = *(struct sockaddr_in *) result->ai_addr;
 		remoteSocketInfo.sin_family = AF_INET;
 		remoteSocketInfo.sin_port = htons((u_short)port);
 
