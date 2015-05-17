@@ -29,9 +29,9 @@ void ServerSocket::startListening() {
 void ServerSocket::stopListening() {
 	SocketHelper::closeSocket(serverSocket);
 
-	#ifdef _WIN32
-		WSACleanup();
-	#endif
+#ifdef _WIN32
+	WSACleanup();
+#endif
 }
 
 #ifdef _WIN32
@@ -55,9 +55,9 @@ bool ServerSocket::wsaInitialization() {
 #endif
 
 void ServerSocket::initServerSocket() {
-	#ifdef _WIN32
-		wsaInitialization();
-	#endif
+#ifdef _WIN32
+	wsaInitialization();
+#endif
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 
 	if (serverSocket < 0) {
@@ -73,7 +73,7 @@ void ServerSocket::initServerSocket() {
 
 void ServerSocket::bindServerSocket() {
 	if (bind(serverSocket, (struct sockaddr *) &serverAddress,
-			sizeof(serverAddress)) < 0) {
+		sizeof(serverAddress)) < 0) {
 		throw SocketException("Socket binding error");
 	}
 }
