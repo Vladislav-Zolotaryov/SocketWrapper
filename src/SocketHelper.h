@@ -20,7 +20,7 @@
 	class SocketHelper {
 		public:
 			static void closeSocket(SOCKET socket);
-			static sockaddr_in createSocketInfo(char* hostname, int port);
+			static sockaddr_in createSocketInfo(const char* hostname, int port);
 	};
 
 #endif

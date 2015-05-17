@@ -8,7 +8,7 @@ void SocketHelper::closeSocket(SOCKET socket) {
 	#endif
 }
 
-sockaddr_in SocketHelper::createSocketInfo(char* hostname, int port) {
+sockaddr_in SocketHelper::createSocketInfo(const char* hostname, int port) {
 	#ifdef _WIN32
 		struct sockaddr_in remoteSocketInfo;
 		struct addrinfo *result = NULL;

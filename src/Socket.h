@@ -1,9 +1,9 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 
-    #include "SocketException.h"
+   	#include "SocketException.h"
 	#include "SocketHelper.h"
-    #include <cstring> 
+   	#include <cstring> 
     
 	#ifdef _WIN32
 		#pragma comment(lib, "Ws2_32.lib")
@@ -21,7 +21,7 @@
 
 	class Socket {
 		public:
-			Socket(char* hostname, int port);
+			Socket(const char* hostname, int port);
 			Socket(SOCKET socket);
 			~Socket();
 
@@ -33,7 +33,9 @@
 		private:
 			sockaddr_in createSocketInfo(char* hostname, int port);
 			void clearSocketInfo();
-			SOCKET socket;
+			int createSocketHandle();
+
+			SOCKET socketHandle;
 			struct sockaddr_in remoteSocketInfo;
 	};
 

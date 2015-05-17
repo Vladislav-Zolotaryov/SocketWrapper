@@ -1,19 +1,19 @@
 cmake_minimum_required (VERSION 2.6)
 project (SocketWrapper)
 
-set (main
-    main.cpp
-    
-    ServerSocket.h
-    ServerSocket.cpp
-    
+set (main   
+    SocketException.h
+
     Socket.h
     Socket.cpp
-    
-    SocketException.h
+
+    ServerSocket.h
+    ServerSocket.cpp      
 
     SocketHelper.h
     SocketHelper.cpp
+
+    main.cpp
 )
 
 add_executable(SocketWrapper ${main})
